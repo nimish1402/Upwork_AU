@@ -1,0 +1,39 @@
+services:
+  - type: web
+    name: upwork-automation
+    runtime: docker
+    repo: https://github.com/nimish1402/Upwork_AU
+    branch: main
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: N8N_BASIC_AUTH_ACTIVE
+        value: true
+      - key: N8N_BASIC_AUTH_USER
+        value: admin
+      - key: N8N_BASIC_AUTH_PASSWORD
+        generateValue: true
+      - key: N8N_ENCRYPTION_KEY
+        generateValue: true
+      - key: WEBHOOK_URL
+        value: https://upwork-automation.onrender.com/
+      - key: N8N_BLOCK_ENV_ACCESS_IN_NODE
+        value: false
+      - key: N8N_HOST
+        value: 0.0.0.0
+      - key: N8N_PORT
+        value: 5678
+      - key: N8N_PROTOCOL
+        value: https
+      - key: NODE_ENV
+        value: production
+      # Add these manually in Render dashboard (secrets):
+      # - GOOGLE_GEMINI_API_KEY
+      # - AIRTABLE_ACCESS_TOKEN
+      # - AIRTABLE_BASE_ID
+      # - AIRTABLE_TABLE_ID
+      # - SLACK_WEBHOOK_URL
+      # - UPWORK_SEARCH_QUERY
+      # - JOB_MAX_AGE_HOURS
+    plan: free
+    region: singapore
+    healthCheckPath: /healthz
