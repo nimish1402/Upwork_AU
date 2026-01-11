@@ -1,0 +1,115 @@
+[
+    {
+        "jobNumber": 1,
+        "title": "Build n8n Workflow for CRM Automation with Airtable & Twilio",
+        "description": "Looking for an n8n expert to build a workflow that automates our sales pipeline. We need to sync data between Airtable and our Twilio voice agent, trigger automated follow-ups, and integrate with our CRM API. Must be completed in 2 days. Budget is flexible for the right person.",
+        "url": "https://www.upwork.com/jobs/~example123456",
+        "experienceLevel": "Intermediate",
+        "jobType": "Fixed Price",
+        "posted": "2 hours ago",
+        "budget": "$500",
+        "aiScore": {
+            "score": "9/10",
+            "priority": "High",
+            "reason": "Perfect match for Morgan's expertise in n8n, Airtable, and Twilio. The job is clearly defined, has a realistic 2-day timeline for quick wins, mentions flexible budget ($500+), and involves exactly the automation stack Morgan specializes in. Client urgency (2-hour posting) suggests they're ready to hire fast."
+        },
+        "skillMatchCount": 5,
+        "matchedKeywords": [
+            "n8n",
+            "automation",
+            "Airtable",
+            "Twilio",
+            "CRM",
+            "API"
+        ]
+    },
+    {
+        "jobNumber": 2,
+        "title": "AI Chatbot Integration with Make/Zapier (n8n Preferred)",
+        "description": "We're a small startup needing help integrating an AI chatbot with our customer support system. We use Make currently, but open to n8n if it's better. Need someone to set up automated responses, route conversations, and log everything to our database. Experience with conversational AI is a must.",
+        "url": "https://www.upwork.com/jobs/~example234567",
+        "experienceLevel": "Entry Level",
+        "jobType": "Hourly",
+        "posted": "5 hours ago",
+        "budget": "$25-35/hr",
+        "aiScore": {
+            "score": "8/10",
+            "priority": "High",
+            "reason": "Strong automation fit with n8n, chatbot, and conversational AI keywords. Client is flexible on tools and specifically mentions n8n preference. Entry-level complexity means quick turnaround. The hourly rate is reasonable, and it's perfect for building portfolio in the conversational AI space that Morgan targets."
+        },
+        "skillMatchCount": 6,
+        "matchedKeywords": [
+            "n8n",
+            "Make",
+            "Zapier",
+            "AI",
+            "chatbot",
+            "conversational",
+            "automation"
+        ]
+    },
+    {
+        "jobNumber": 3,
+        "title": "Retell AI Voice Agent Setup for Appointment Booking",
+        "description": "Need help setting up a Retell AI voice agent that can handle appointment bookings for our dental clinic. Should integrate with our calendar system and send confirmations via SMS. Some workflow automation experience needed but not critical - we can guide you through our systems.",
+        "url": "https://www.upwork.com/jobs/~example345678",
+        "experienceLevel": "Intermediate",
+        "jobType": "Fixed Price",
+        "posted": "3 hours ago",
+        "budget": "$300-400",
+        "aiScore": {
+            "score": "10/10",
+            "priority": "High",
+            "reason": "PERFECT fit - Retell AI is Morgan's exact specialty for voice agents. The scope is achievable in under 48 hours, budget is solid ($300-400), client is willing to provide guidance (easy to work with), and it's a portfolio-worthy project. This is the ideal 'quick win' job for building testimonials in the voice agent niche."
+        },
+        "skillMatchCount": 4,
+        "matchedKeywords": [
+            "Retell",
+            "AI",
+            "voice agent",
+            "workflow",
+            "automation"
+        ]
+    },
+    {
+        "jobNumber": 4,
+        "title": "WordPress Plugin Customization + Light API Work",
+        "description": "Looking for a WordPress developer to customize an existing plugin and add some API integrations. Need to connect our WordPress site to a third-party service and automate some data syncing. PHP and WordPress experience required.",
+        "url": "https://www.upwork.com/jobs/~example456789",
+        "experienceLevel": "Expert",
+        "jobType": "Fixed Price",
+        "posted": "1 hour ago",
+        "budget": "$150",
+        "aiScore": {
+            "score": "4/10",
+            "priority": "Low",
+            "reason": "Not a good fit. While it mentions API integration and automation, this is primarily a WordPress/PHP development job, not n8n or workflow automation. The budget is low ($150) for expert-level work, and Morgan's strengths lie in no-code/low-code automation tools, not WordPress customization. Would be a time sink away from core competencies."
+        },
+        "skillMatchCount": 2,
+        "matchedKeywords": [
+            "API",
+            "automation"
+        ]
+    },
+    {
+        "jobNumber": 5,
+        "title": "Help with Workflow Automation Tool (Not Sure Which One)",
+        "description": "Our team needs help automating repetitive tasks - we get data from Google Sheets, need to process it, and send results via email. We've heard of Zapier and other tools but not sure what's best. Looking for someone to consult and then build the solution. Small project to start, could lead to more work.",
+        "url": "https://www.upwork.com/jobs/~example567890",
+        "experienceLevel": "Entry Level",
+        "jobType": "Hourly",
+        "posted": "4 hours ago",
+        "budget": "$20-30/hr",
+        "aiScore": {
+            "score": "6/10",
+            "priority": "Medium",
+            "reason": "Decent opportunity for portfolio building and potential long-term client relationship. The scope is unclear but simple (Google Sheets + email), which means it can be finished quickly. However, the hourly rate is on the lower end ($20-30/hr), and client doesn't know what tool to use (could mean hand-holding). Good for getting a testimonial and 'opening the door' to more work, but not a quick high-value win."
+        },
+        "skillMatchCount": 3,
+        "matchedKeywords": [
+            "workflow",
+            "automation",
+            "Zapier"
+        ]
+    }
+]

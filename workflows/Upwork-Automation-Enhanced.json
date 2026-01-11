@@ -1,0 +1,528 @@
+{
+    "name": "Upwork Automation - Enhanced (Gemini)",
+    "nodes": [
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "field": "hours",
+                            "hoursInterval": 8
+                        }
+                    ]
+                }
+            },
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1.2,
+            "position": [
+                0,
+                0
+            ],
+            "id": "schedule-trigger",
+            "name": "Schedule Trigger"
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "=https://api.apify.com/v2/acts/neatrat~upwork-job-scraper/run-sync-get-dataset-items?token=YOUR_APIFY_TOKEN_HERE",
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={\n  \"query\": \"{{ $env.UPWORK_SEARCH_QUERY || 'n8n,automation,AI,workflow' }}\",\n  \"maxJobAge\": {\n    \"value\": {{ $env.JOB_MAX_AGE_HOURS || 6 }},\n    \"unit\": \"hours\"\n  }\n}",
+                "options": {
+                    "timeout": 60000,
+                    "retry": {
+                        "enabled": true,
+                        "maxRetries": 3,
+                        "waitBetweenRetries": 5000
+                    }
+                }
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                200,
+                0
+            ],
+            "id": "fetch-jobs",
+            "name": "Fetch Jobs from Apify",
+            "continueOnFail": true,
+            "onError": "continueErrorOutput"
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "options": {
+                        "caseSensitive": false
+                    },
+                    "conditions": [
+                        {
+                            "leftValue": "={{ $json.error }}",
+                            "rightValue": "",
+                            "operator": {
+                                "type": "object",
+                                "operation": "empty"
+                            }
+                        }
+                    ]
+                }
+            },
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 2,
+            "position": [
+                400,
+                0
+            ],
+            "id": "check-api-success",
+            "name": "Check API Success"
+        },
+        {
+            "parameters": {
+                "assignments": {
+                    "assignments": [
+                        {
+                            "id": "title",
+                            "name": "title",
+                            "value": "={{ $json.title || 'No Title' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "description",
+                            "name": "description",
+                            "value": "={{ $json.description || 'No Description' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "url",
+                            "name": "url",
+                            "value": "={{ $json.url || '' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "relativeDate",
+                            "name": "relativeDate",
+                            "value": "={{ $json.relativeDate || 'Unknown' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "jobType",
+                            "name": "jobType",
+                            "value": "={{ $json.jobType || 'Not specified' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "experienceLevel",
+                            "name": "experienceLevel",
+                            "value": "={{ $json.experienceLevel || 'Any' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "budget",
+                            "name": "budget",
+                            "value": "={{ $json.budget || 0 }}",
+                            "type": "number"
+                        },
+                        {
+                            "id": "Posted",
+                            "name": "Posted",
+                            "value": "={{ $json.relativeDate }}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "type": "n8n-nodes-base.set",
+            "typeVersion": 3.4,
+            "position": [
+                600,
+                0
+            ],
+            "id": "normalize-fields",
+            "name": "Normalize Job Fields"
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "options": {
+                        "caseSensitive": false
+                    },
+                    "conditions": [
+                        {
+                            "leftValue": "={{ $json.title }}",
+                            "rightValue": "",
+                            "operator": {
+                                "type": "string",
+                                "operation": "notEmpty"
+                            }
+                        },
+                        {
+                            "id": "description",
+                            "leftValue": "={{ $json.description }}",
+                            "rightValue": "",
+                            "operator": {
+                                "type": "string",
+                                "operation": "notEmpty"
+                            }
+                        }
+                    ],
+                    "combinator": "and"
+                }
+            },
+            "type": "n8n-nodes-base.filter",
+            "typeVersion": 2,
+            "position": [
+                800,
+                0
+            ],
+            "id": "filter-valid-jobs",
+            "name": "Filter Valid Jobs"
+        },
+        {
+            "parameters": {
+                "assignments": {
+                    "assignments": [
+                        {
+                            "id": "skillKeywords",
+                            "name": "skillKeywords",
+                            "value": "=n8n,automation,AI,workflow,Twilio,Retell,voice agent,conversational,chatbot,zapier,make,API,integration",
+                            "type": "string"
+                        },
+                        {
+                            "id": "skillMatchCount",
+                            "name": "skillMatchCount",
+                            "value": "={{ \n  const keywords = 'n8n,automation,AI,workflow,Twilio,Retell,voice agent,conversational,chatbot,zapier,make,API,integration'.toLowerCase().split(',');\n  const text = ($json.title + ' ' + $json.description).toLowerCase();\n  let count = 0;\n  keywords.forEach(keyword => {\n    if (text.includes(keyword.trim())) count++;\n  });\n  return count;\n}}",
+                            "type": "number"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "type": "n8n-nodes-base.set",
+            "typeVersion": 3.4,
+            "position": [
+                1000,
+                0
+            ],
+            "id": "calculate-skill-match",
+            "name": "Calculate Skill Match"
+        },
+        {
+            "parameters": {
+                "model": "gemini-1.5-pro",
+                "options": {}
+            },
+            "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+            "typeVersion": 1,
+            "position": [
+                1200,
+                150
+            ],
+            "id": "gemini-model",
+            "name": "Google Gemini Model",
+            "credentials": {
+                "googleGeminiOAuth2Api": {
+                    "id": "gemini-credentials",
+                    "name": "Google Gemini API"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "jsonSchemaExample": "{\n  \"score\": \"X/10\",\n  \"priority\": \"High | Medium | Low\",\n  \"reason\": \"One short paragraph explaining why\"\n}"
+            },
+            "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+            "typeVersion": 1.3,
+            "position": [
+                1200,
+                300
+            ],
+            "id": "output-parser",
+            "name": "Structured Output Parser"
+        },
+        {
+            "parameters": {
+                "promptType": "define",
+                "text": "={{ $json.title }}\\n{{ $json.description }}\\n{{ $json.url }}\\n{{ $json.relativeDate }}\\n{{ $json.jobType }}\\n{{ $json.experienceLevel }}",
+                "hasOutputParser": true,
+                "messages": {
+                    "messageValues": [
+                        {
+                            "message": "=You are an expert Upwork Job Scoring Agent for Morgan, an automation specialist (n8n, AI workflows, voice agents, Twilio/Retell).\\n\\nOBJECTIVE: Score jobs based on:\\n✓ Quick wins (< 48 hours)\\n✓ Automation relevance (n8n, AI, workflows, APIs, voice agents)\\n✓ Client quality (payment verified, good history)\\n✓ Portfolio building potential\\n\\nSCORING RULES:\\n\\nHIGH (8-10/10):\\n- Clear automation work (n8n, Make, Zapier, AI, chatbots, Twilio/Retell, voice agents)\\n- Budget: $100+ or fast turnaround\\n- Client: Verified payment OR good reviews\\n- Scope: Achievable in < 48 hours\\nExample: \\\"Build n8n workflow to automate CRM updates via API\\\" = 9/10\\n\\nMEDIUM (5-7/10):\\n- Partial automation (e.g., \\\"need help with automation tool\\\")\\n- Lower budget but good for testimonials\\n- New client with no history\\n- Unclear scope but teachable\\nExample: \\\"Automate email responses using AI\\\" = 6/10\\n\\nLOW (1-4/10):\\n- Not automation (WordPress, design, long-term dev)\\n- Very low budget (< $50) with high complexity\\n- Red flags (bad reviews, unrealistic expectations)\\nExample: \\\"Build full enterprise CRM from scratch\\\" = 2/10\\n\\nJOB DATA:\\nTitle: {{ $json.title }}\\nDescription: {{ $json.description }}\\nExperience Level: {{ $json.experienceLevel }}\\nPosted: {{ $json.relativeDate }}\\nSkill Match Score: {{ $json.skillMatchCount }}/13\\n\\nIMPORTANT: You must respond ONLY with valid JSON in this exact format:\\n{\\n  \\\"score\\\": \\\"X/10\\\",\\n  \\\"priority\\\": \\\"High\\\",\\n  \\\"reason\\\": \\\"One concise paragraph explaining the score\\\"\\n}\\n\\nThe priority must be exactly one of: High, Medium, or Low"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "type": "@n8n/n8n-nodes-langchain.chainLlm",
+            "typeVersion": 1.7,
+            "position": [
+                1200,
+                0
+            ],
+            "id": "ai-scoring",
+            "name": "AI Job Scoring",
+            "continueOnFail": true
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "options": {
+                        "caseSensitive": false
+                    },
+                    "conditions": [
+                        {
+                            "leftValue": "={{ $json.output?.priority }}",
+                            "rightValue": "High",
+                            "operator": {
+                                "type": "string",
+                                "operation": "equals"
+                            }
+                        }
+                    ]
+                }
+            },
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 2,
+            "position": [
+                1400,
+                0
+            ],
+            "id": "check-priority",
+            "name": "Check Priority"
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $env.SLACK_WEBHOOK_URL }}",
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={\n  \"text\": \"🔥 *HIGH PRIORITY UPWORK JOB FOUND!*\",\n  \"blocks\": [\n    {\n      \"type\": \"header\",\n      \"text\": {\n        \"type\": \"plain_text\",\n        \"text\": \"🔥 High Priority Job Alert\"\n      }\n    },\n    {\n      \"type\": \"section\",\n      \"fields\": [\n        {\n          \"type\": \"mrkdwn\",\n          \"text\": \"*Title:*\\n{{ $('Normalize Job Fields').item.json.title }}\"\n        },\n        {\n          \"type\": \"mrkdwn\",\n          \"text\": \"*Score:*\\n{{ $('AI Job Scoring').item.json.output.score }}\"\n        },\n        {\n          \"type\": \"mrkdwn\",\n          \"text\": \"*Experience:*\\n{{ $('Normalize Job Fields').item.json.experienceLevel }}\"\n        },\n        {\n          \"type\": \"mrkdwn\",\n          \"text\": \"*Posted:*\\n{{ $('Normalize Job Fields').item.json.relativeDate }}\"\n        }\n      ]\n    },\n    {\n      \"type\": \"section\",\n      \"text\": {\n        \"type\": \"mrkdwn\",\n        \"text\": \"*Reason:*\\n{{ $('AI Job Scoring').item.json.output.reason }}\"\n      }\n    },\n    {\n      \"type\": \"actions\",\n      \"elements\": [\n        {\n          \"type\": \"button\",\n          \"text\": {\n            \"type\": \"plain_text\",\n            \"text\": \"View Job on Upwork\"\n          },\n          \"url\": \"{{ $('Normalize Job Fields').item.json.url }}\",\n          \"style\": \"primary\"\n        }\n      ]\n    }\n  ]\n}",
+                "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1600,
+                -100
+            ],
+            "id": "slack-alert",
+            "name": "Send Slack Alert",
+            "continueOnFail": true
+        },
+        {
+            "parameters": {
+                "authentication": "airtableOAuth2Api",
+                "operation": "create",
+                "base": {
+                    "__rl": true,
+                    "value": "={{ $env.AIRTABLE_BASE_ID }}",
+                    "mode": "id"
+                },
+                "table": {
+                    "__rl": true,
+                    "value": "={{ $env.AIRTABLE_TABLE_ID }}",
+                    "mode": "id"
+                },
+                "columns": {
+                    "mappingMode": "defineBelow",
+                    "value": {
+                        "Title": "={{ $('Normalize Job Fields').item.json.title }}",
+                        "Description": "={{ $('Normalize Job Fields').item.json.description }}",
+                        "URL": "={{ $('Normalize Job Fields').item.json.url }}",
+                        "Score": "={{ $('AI Job Scoring').item.json.output.score }}",
+                        "Priority": "={{ $('AI Job Scoring').item.json.output.priority }}",
+                        "Reason": "={{ $('AI Job Scoring').item.json.output.reason }}",
+                        "Proposal": "=Hey! I can do this for you.\\n\\nI recorded a short loom for you :)",
+                        "Time Job Created": "={{ $('Normalize Job Fields').item.json.Posted }}",
+                        "Skill Match": "={{ $('Calculate Skill Match').item.json.skillMatchCount }}"
+                    }
+                },
+                "options": {}
+            },
+            "type": "n8n-nodes-base.airtable",
+            "typeVersion": 2.1,
+            "position": [
+                1600,
+                100
+            ],
+            "id": "save-to-airtable",
+            "name": "Save to Airtable",
+            "credentials": {
+                "airtableOAuth2Api": {
+                    "id": "airtable-credentials",
+                    "name": "Airtable Personal Access Token"
+                }
+            },
+            "continueOnFail": true
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $env.SLACK_WEBHOOK_URL }}",
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={\n  \"text\": \"⚠️ *Upwork Automation Error*\\n*Node:* {{ $json.node }}\\n*Error:* {{ $json.error.message }}\\n*Time:* {{ $now.toISO() }}\"\n}",
+                "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                400,
+                200
+            ],
+            "id": "log-error",
+            "name": "Log Error to Slack",
+            "continueOnFail": true
+        }
+    ],
+    "pinData": {},
+    "connections": {
+        "Schedule Trigger": {
+            "main": [
+                [
+                    {
+                        "node": "Fetch Jobs from Apify",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Fetch Jobs from Apify": {
+            "main": [
+                [
+                    {
+                        "node": "Check API Success",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Check API Success": {
+            "main": [
+                [
+                    {
+                        "node": "Normalize Job Fields",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "Log Error to Slack",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Normalize Job Fields": {
+            "main": [
+                [
+                    {
+                        "node": "Filter Valid Jobs",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Filter Valid Jobs": {
+            "main": [
+                [
+                    {
+                        "node": "Calculate Skill Match",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Calculate Skill Match": {
+            "main": [
+                [
+                    {
+                        "node": "AI Job Scoring",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Google Gemini Model": {
+            "ai_languageModel": [
+                [
+                    {
+                        "node": "AI Job Scoring",
+                        "type": "ai_languageModel",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Structured Output Parser": {
+            "ai_outputParser": [
+                [
+                    {
+                        "node": "AI Job Scoring",
+                        "type": "ai_outputParser",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "AI Job Scoring": {
+            "main": [
+                [
+                    {
+                        "node": "Check Priority",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Check Priority": {
+            "main": [
+                [
+                    {
+                        "node": "Send Slack Alert",
+                        "type": "main",
+                        "index": 0
+                    },
+                    {
+                        "node": "Save to Airtable",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "Save to Airtable",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "active": false,
+    "settings": {
+        "executionOrder": "v1",
+        "saveExecutionProgress": true,
+        "saveManualExecutions": true
+    },
+    "versionId": "enhanced-gemini-v1",
+    "meta": {
+        "templateCredsSetupCompleted": false,
+        "instanceId": "upwork-automation-enhanced-gemini"
+    },
+    "id": "upwork-automation-enhanced-gemini",
+    "tags": [
+        "upwork",
+        "automation",
+        "ai-scoring",
+        "gemini"
+    ]
+}

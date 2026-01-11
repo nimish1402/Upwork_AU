@@ -1,0 +1,35 @@
+# Environment variables
+.env
+
+# n8n data
+n8n-data/
+
+# Node modules
+node_modules/
+
+# Logs
+*.log
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+tmp/
+temp/
+
+# Video files (too large for git)
+videos/*.mp4
+videos/*.mov
+videos/*.avi
+
+# Keep directory structure
+!videos/.gitkeep
+!samples/.gitkeep

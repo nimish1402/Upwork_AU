@@ -1,0 +1,92 @@
+[
+    {
+        "title": "Build n8n Workflow for CRM Automation",
+        "description": "Looking for an experienced n8n developer to create an automated workflow that syncs data between our Airtable CRM and Twilio. Need to automate customer follow-ups and send SMS notifications. Timeline: 2 days. Budget is flexible for quality work.",
+        "url": "https://www.upwork.com/jobs/~example-job-1",
+        "relativeDate": "1 hour ago",
+        "jobType": "Fixed Price",
+        "experienceLevel": "Intermediate",
+        "budget": 500
+    },
+    {
+        "title": "AI Chatbot Integration with Automation Tools",
+        "description": "We need someone to integrate an AI chatbot into our customer support system. Experience with Make or Zapier is okay, but n8n is preferred. Must handle automated routing and logging to database.",
+        "url": "https://www.upwork.com/jobs/~example-job-2",
+        "relativeDate": "3 hours ago",
+        "jobType": "Hourly",
+        "experienceLevel": "Entry Level",
+        "budget": 30
+    },
+    {
+        "title": "Retell AI Voice Agent Setup",
+        "description": "Need help setting up a Retell AI voice agent for appointment booking. Should integrate with our calendar and send confirmation SMS. Quick turnaround needed.",
+        "url": "https://www.upwork.com/jobs/~example-job-3",
+        "relativeDate": "2 hours ago",
+        "jobType": "Fixed Price",
+        "experienceLevel": "Intermediate",
+        "budget": 350
+    },
+    {
+        "title": "WordPress Plugin Development",
+        "description": "Looking for WordPress developer to customize an existing plugin. Need API integration with third-party service. PHP and WordPress experience required.",
+        "url": "https://www.upwork.com/jobs/~example-job-4",
+        "relativeDate": "30 minutes ago",
+        "jobType": "Fixed Price",
+        "experienceLevel": "Expert",
+        "budget": 150
+    },
+    {
+        "title": "Help with Workflow Automation - Not Sure Which Tool",
+        "description": "Our team needs automation help. We work with Google Sheets and need to process data and send emails. Heard about Zapier but open to suggestions. Small project to start.",
+        "url": "https://www.upwork.com/jobs/~example-job-5",
+        "relativeDate": "4 hours ago",
+        "jobType": "Hourly",
+        "experienceLevel": "Entry Level",
+        "budget": 25
+    },
+    {
+        "title": "Make.com Workflow Expert Needed",
+        "description": "Need a Make.com expert to build automation workflows. We want to automate our sales pipeline, integrate Slack notifications, and sync with HubSpot CRM. Experience with API integrations essential.",
+        "url": "https://www.upwork.com/jobs/~example-job-6",
+        "relativeDate": "5 hours ago",
+        "jobType": "Fixed Price",
+        "experienceLevel": "Intermediate",
+        "budget": 400
+    },
+    {
+        "title": "Twilio SMS Integration for Customer Notifications",
+        "description": "Looking for developer to integrate Twilio SMS into our application. Need automated notifications triggered by specific events. Some workflow automation knowledge would be helpful.",
+        "url": "https://www.upwork.com/jobs/~example-job-7",
+        "relativeDate": "2 hours ago",
+        "jobType": "Fixed Price",
+        "experienceLevel": "Intermediate",
+        "budget": 300
+    },
+    {
+        "title": "Full-Stack Web Developer for Enterprise Platform",
+        "description": "Seeking experienced full-stack developer to build enterprise-level web platform from scratch. React, Node.js, PostgreSQL. Long-term project, 6+ months. Must have extensive experience.",
+        "url": "https://www.upwork.com/jobs/~example-job-8",
+        "relativeDate": "1 hour ago",
+        "jobType": "Hourly",
+        "experienceLevel": "Expert",
+        "budget": 80
+    },
+    {
+        "title": "Conversational AI Bot for Customer Service",
+        "description": "Need a conversational AI bot built for our customer service. Should handle common questions, route complex issues, and integrate with our ticketing system via API. AI and automation experience preferred.",
+        "url": "https://www.upwork.com/jobs/~example-job-9",
+        "relativeDate": "3 hours ago",
+        "jobType": "Fixed Price",
+        "experienceLevel": "Intermediate",
+        "budget": 600
+    },
+    {
+        "title": "Zapier Alternative - Need Help Migrating Workflows",
+        "description": "We currently use Zapier but costs are getting high. Want to migrate to an alternative like n8n or Make. Need someone to help migrate our existing automations and set up new workflows.",
+        "url": "https://www.upwork.com/jobs/~example-job-10",
+        "relativeDate": "1 hour ago",
+        "jobType": "Hourly",
+        "experienceLevel": "Intermediate",
+        "budget": 40
+    }
+]
