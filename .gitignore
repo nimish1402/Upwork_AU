@@ -7,6 +7,9 @@ n8n-data/
 # Node modules
 node_modules/
 
+# Demo and explanation files (keep local)
+PROJECT-EXPLANATION.md
+
 # Logs
 *.log
 logs/
